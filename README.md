@@ -15,20 +15,20 @@ The source code for CoPS will be made publicly available upon the paper's accept
 Here, we present a brief summary of CoPS's performance across 5 industrial and 8 medical datasets:
 <table style="border-collapse: collapse; table-layout: fixed; width:2100px; white-space:nowrap;">
   <tr>
-    <td style="width:140px; text-align:left;">Metrics</td>
-    <td style="width:140px; text-align:center;">MVTec-AD</td>
-    <td style="width:140px; text-align:center;">VisA</td>
-    <td style="width:140px; text-align:center;">BTAD</td>
-    <td style="width:140px; text-align:center;">MPDD</td>
-    <td style="width:140px; text-align:center;">DTD-Synthetic</td>
-    <td style="width:140px; text-align:center;">HeadCT</td>
-    <td style="width:140px; text-align:center;">BrainMRI</td>
-    <td style="width:140px; text-align:center;">Br35H</td>
-    <td style="width:140px; text-align:center;">ISIC</td>
-    <td style="width:140px; text-align:center;">CVC-ColonDB</td>
-    <td style="width:140px; text-align:center;">CVC-ClinicDB</td>
-    <td style="width:140px; text-align:center;">Kvasir</td>
-    <td style="width:140px; text-align:center;">Endo</td>
+    <td style="width:150px; text-align:left;">Metrics</td>
+    <td style="width:150px; text-align:center;">MVTec-AD</td>
+    <td style="width:150px; text-align:center;">VisA</td>
+    <td style="width:150px; text-align:center;">BTAD</td>
+    <td style="width:150px; text-align:center;">MPDD</td>
+    <td style="width:150px; text-align:center;">DTD-Synthetic</td>
+    <td style="width:150px; text-align:center;">HeadCT</td>
+    <td style="width:150px; text-align:center;">BrainMRI</td>
+    <td style="width:150px; text-align:center;">Br35H</td>
+    <td style="width:150px; text-align:center;">ISIC</td>
+    <td style="width:150px; text-align:center;">CVC-ColonDB</td>
+    <td style="width:150px; text-align:center;">CVC-ClinicDB</td>
+    <td style="width:150px; text-align:center;">Kvasir</td>
+    <td style="width:150px; text-align:center;">Endo</td>
   </tr>
   <tr>
     <td style="text-align:left;">I-AUROC (%)</td>
