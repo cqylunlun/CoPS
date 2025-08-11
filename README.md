@@ -11,7 +11,7 @@ Huiyuan Luo, Chengkan Lv*, Zhengtao Zhang_
 
 ## Introduction
 CoPS dynamically synthesizes visually conditioned prompts to fine‑tune CLIP, achieving SOTA zero‑shot anomaly detection.
-The source code for CoPS will be made publicly available upon the paper's acceptance.
+The source code and model checkpoints for CoPS will be released upon the paper’s acceptance. Stay tuned.
 Here, we present a brief summary of CoPS's performance across 5 industrial and 8 medical datasets:
 <table style="border-collapse: collapse; table-layout: fixed; width:2100px; white-space:nowrap;">
   <tr>
