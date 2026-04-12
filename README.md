@@ -61,8 +61,8 @@ a `meta.json` file will be created in the root directory of each dataset.
 ```
 cd ./shell
 bash test.sh 0 10 VisA MVTec  # gpu_id=0, epoch=10, trained on VisA,  test on MVTec
-bash test.sh 0 10 VisA MVTec  # gpu_id=0, epoch=10, trained on VisA,  test on MPDD
-bash test.sh 0 10 VisA MVTec  # gpu_id=0, epoch=10, trained on VisA,  test on HeadCT
+bash test.sh 0 10 VisA MPDD   # gpu_id=0, epoch=10, trained on VisA,  test on MPDD
+bash test.sh 0 10 VisA HeadCT # gpu_id=0, epoch=10, trained on VisA,  test on HeadCT
 ......
 bash test.sh 0 5 MVTec VisA   # gpu_id=0, epoch=5,  trained on MVTec, test on VisA
 ```
