@@ -71,8 +71,8 @@ bash test.sh 0 5 MVTec VisA   # gpu_id=0, epoch=5,  trained on MVTec, test on Vi
 
 ```
 cd ./shell
-bash train.sh 0 10 VisA  # gpu_id=0, epoch=10, train on VisA
-bash train.sh 0 5 MVTec  # gpu_id=0, epoch=5,  train on MVTec
+bash train.sh 0 10 VisA; bash test.sh 0 10 VisA MVTec  # train on VisA,  test on MVTec
+bash train.sh 0 5 MVTec; bash test.sh 0 5 MVTec VisA   # train on MVTec, test on VisA
 ```
 
 ## Visualization
