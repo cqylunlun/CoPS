@@ -5,7 +5,6 @@ test_path=$4
 train_name=${train_path,,}
 test_name=${test_path,,}
 
-clear
 cd ..
 CUDA_VISIBLE_DEVICES=$gpu_id python test.py \
   --data_path /root/cqy/dataset/$test_path \
