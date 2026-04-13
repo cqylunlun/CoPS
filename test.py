@@ -101,7 +101,7 @@ def test(args):
             patch_sim = compute_similarity(patch_feature, text_features)  # [1, 1369, 2]
             patch_sim = (patch_sim / 0.07).softmax(-1)
 
-            alpha = 0.26 if 'mvtec' in args.dataset else 0.35
+            alpha = 0.35 if 'visa' in args.dataset else 0.26
             distance_n = (distance_n - distance_n.min()) / (distance_n.max() - distance_n.min())
             distance_a = 1 - (distance_a - distance_a.min()) / (distance_a.max() - distance_a.min())
             distance = alpha * distance_n + (1 - alpha) * distance_a
@@ -122,7 +122,7 @@ def test(args):
         image_sim = (image_sim / 0.07).softmax(-1)
         image_sim = image_sim[:, 0, 1]  # [1,]
 
-        beta = 0.9 if 'mvtec' in args.dataset else 1.0
+        beta = 1.0 if 'visa' in args.dataset else 0.9
         patch_sim = torch.amax(patch_sim[..., 1], dim=-1)
         image_sim = beta * image_sim + (1 - beta) * patch_sim
 
