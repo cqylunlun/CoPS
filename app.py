@@ -52,7 +52,7 @@ def _overlay_heatmap(image, anomaly_map, normalize=False):
     heat = (np.clip(anomaly_map, 0.0, 1.0) * 255).astype(np.uint8)
     heat = cv2.applyColorMap(heat, cv2.COLORMAP_JET)
     heat = cv2.cvtColor(heat, cv2.COLOR_BGR2RGB)
-    blended = cv2.addWeighted(base, 0.55, heat, 0.45, 0)
+    blended = cv2.addWeighted(base, 0.5, heat, 0.5, 0)
     return Image.fromarray(blended)
 
 
