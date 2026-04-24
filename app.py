@@ -36,10 +36,19 @@ class Args:
     image_size = IMAGE_SIZE
 
 
-def _overlay_heatmap(image, anomaly_map):
+def _normalize_map(anomaly_map):
+    denom = anomaly_map.max() - anomaly_map.min()
+    if denom < 1e-8:
+        return np.zeros_like(anomaly_map)
+    return (anomaly_map - anomaly_map.min()) / denom
+
+
+def _overlay_heatmap(image, anomaly_map, normalize=False):
     width, height = image.size
     base = np.array(image.convert("RGB"))
     anomaly_map = cv2.resize(anomaly_map, (width, height), interpolation=cv2.INTER_LINEAR)
+    if normalize:
+        anomaly_map = _normalize_map(anomaly_map)
     heat = (np.clip(anomaly_map, 0.0, 1.0) * 255).astype(np.uint8)
     heat = cv2.applyColorMap(heat, cv2.COLORMAP_JET)
     heat = cv2.cvtColor(heat, cv2.COLOR_BGR2RGB)
@@ -144,9 +153,10 @@ def predict(image, checkpoint_label):
     beta = 1.0 if train_dataset == "visa" else 0.9
     patch_score = torch.amax(last_patch_sim[..., 1], dim=-1)
     score = beta * image_sim + (1.0 - beta) * patch_score
+    score_value = float(score.item())
 
-    overlay = _overlay_heatmap(image, anomaly_map)
-    return float(score.item()), overlay
+    overlay = _overlay_heatmap(image, anomaly_map, normalize=score_value >= 0.5)
+    return score_value, overlay
 
 
 with gr.Blocks(
@@ -164,16 +174,22 @@ with gr.Blocks(
     with gr.Row():
         with gr.Column():
             image_input = gr.Image(type="pil", label="Input image")
+        with gr.Column():
+            overlay_output = gr.Image(type="pil", label="Anomaly heatmap")
+    with gr.Row():
+        with gr.Column():
             checkpoint_input = gr.Radio(
                 choices=list(CHECKPOINTS.keys()),
                 value="Trained on VisA",
                 label="Checkpoints",
                 elem_classes=["matched-control"],
             )
+        with gr.Column():
+            score_output = gr.Number(label="Anomaly score", elem_classes=["matched-control"])
+    with gr.Row():
+        with gr.Column():
             run_button = gr.Button("Run inference", variant="primary", elem_classes=["full-width-button"])
         with gr.Column():
-            overlay_output = gr.Image(type="pil", label="Anomaly heatmap")
-            score_output = gr.Number(label="Anomaly score", elem_classes=["matched-control"])
             stop_button = gr.Button("Stop inference", variant="stop", elem_classes=["full-width-button"])
 
     inference_event = run_button.click(
