@@ -28,44 +28,9 @@ T_N_CTX = 4
 DPAM = 24
 
 CHECKPOINTS = {
-    "ViSA checkpoint": ("visa", "./results/models/visa/epoch_10.pth"),
-    "MVTec checkpoint": ("mvtec", "./results/models/mvtec/epoch_5.pth"),
+    "Trained on VisA": ("visa", "./results/models/visa/epoch_10.pth"),
+    "Trained on MVTec": ("mvtec", "./results/models/mvtec/epoch_5.pth"),
 }
-
-CLASSES = [
-    "object",
-    "carpet",
-    "grid",
-    "leather",
-    "tile",
-    "wood",
-    "bottle",
-    "cable",
-    "capsule",
-    "hazelnut",
-    "metal_nut",
-    "pill",
-    "screw",
-    "toothbrush",
-    "transistor",
-    "zipper",
-    "candle",
-    "capsules",
-    "cashew",
-    "chewinggum",
-    "fryum",
-    "macaroni1",
-    "macaroni2",
-    "pcb1",
-    "pcb2",
-    "pcb3",
-    "pcb4",
-    "pipe_fryum",
-    "brain",
-    "colon",
-    "skin",
-]
-
 
 class Args:
     image_size = IMAGE_SIZE
@@ -120,14 +85,14 @@ def load_cops(checkpoint_label):
 
 
 @torch.no_grad()
-def predict(image, checkpoint_label, class_name):
+def predict(image, checkpoint_label):
     if image is None:
         raise gr.Error("Please upload an image.")
 
     device, train_dataset, model, prompt_learner, hyperparameters = load_cops(checkpoint_label)
     preprocess, _ = get_transform(Args())
     image_tensor = preprocess(image.convert("RGB")).unsqueeze(0).to(device)
-    cls_name = [class_name.strip() or "object"]
+    cls_name = ["object"]
 
     image_features, patch_features, _, _ = model.encode_image(
         image_tensor,
@@ -192,27 +157,21 @@ def predict(image, checkpoint_label, class_name):
 with gr.Blocks(title="CoPS anomaly detection") as demo:
     gr.Markdown("# CoPS anomaly detection")
     with gr.Row():
-        image_input = gr.Image(type="pil", label="Image")
         with gr.Column():
+            image_input = gr.Image(type="pil", label="Input image")
             checkpoint_input = gr.Radio(
                 choices=list(CHECKPOINTS.keys()),
-                value="ViSA checkpoint",
-                label="Checkpoint",
-            )
-            class_input = gr.Dropdown(
-                choices=CLASSES,
-                value="object",
-                allow_custom_value=True,
-                label="Object class",
+                value="Trained on VisA",
+                label="Checkpoints",
             )
             run_button = gr.Button("Run inference", variant="primary")
-    with gr.Row():
-        score_output = gr.Number(label="Anomaly score")
-        overlay_output = gr.Image(type="pil", label="Anomaly heatmap")
+        with gr.Column():
+            score_output = gr.Number(label="Anomaly score")
+            overlay_output = gr.Image(type="pil", label="Anomaly heatmap")
 
     run_button.click(
         predict,
-        inputs=[image_input, checkpoint_input, class_input],
+        inputs=[image_input, checkpoint_input],
         outputs=[score_output, overlay_output],
     )
 
