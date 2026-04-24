@@ -36,16 +36,11 @@ class Args:
     image_size = IMAGE_SIZE
 
 
-def _normalize_map(anomaly_map):
-    denom = anomaly_map.max() - anomaly_map.min()
-    if denom < 1e-8:
-        return np.zeros_like(anomaly_map)
-    return (anomaly_map - anomaly_map.min()) / denom
-
-
 def _overlay_heatmap(image, anomaly_map):
-    base = np.array(image.convert("RGB").resize((IMAGE_SIZE, IMAGE_SIZE)))
-    heat = (_normalize_map(anomaly_map) * 255).astype(np.uint8)
+    width, height = image.size
+    base = np.array(image.convert("RGB"))
+    anomaly_map = cv2.resize(anomaly_map, (width, height), interpolation=cv2.INTER_LINEAR)
+    heat = (np.clip(anomaly_map, 0.0, 1.0) * 255).astype(np.uint8)
     heat = cv2.applyColorMap(heat, cv2.COLORMAP_JET)
     heat = cv2.cvtColor(heat, cv2.COLOR_BGR2RGB)
     blended = cv2.addWeighted(base, 0.55, heat, 0.45, 0)
@@ -166,8 +161,8 @@ with gr.Blocks(title="CoPS anomaly detection") as demo:
             )
             run_button = gr.Button("Run inference", variant="primary")
         with gr.Column():
-            score_output = gr.Number(label="Anomaly score")
             overlay_output = gr.Image(type="pil", label="Anomaly heatmap")
+            score_output = gr.Number(label="Anomaly score")
 
     run_button.click(
         predict,
