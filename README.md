@@ -1,6 +1,6 @@
 ---
 title: CoPS
-emoji: C
+emoji: 🔎
 colorFrom: blue
 colorTo: green
 sdk: gradio
