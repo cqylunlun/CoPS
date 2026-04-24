@@ -149,25 +149,32 @@ def predict(image, checkpoint_label):
     return float(score.item()), overlay
 
 
-with gr.Blocks(title="CoPS anomaly detection") as demo:
+with gr.Blocks(
+    title="CoPS anomaly detection",
+    css="""
+    .matched-control {
+        min-height: 96px;
+    }
+    .full-width-button button {
+        width: 100%;
+    }
+    """,
+) as demo:
     gr.Markdown("# CoPS anomaly detection")
     with gr.Row():
         with gr.Column():
             image_input = gr.Image(type="pil", label="Input image")
-            with gr.Row():
-                run_button = gr.Button("Run inference", variant="primary")
-                stop_button = gr.Button("Stop inference", variant="stop")
-        with gr.Column():
-            overlay_output = gr.Image(type="pil", label="Anomaly heatmap")
-    with gr.Row():
-        with gr.Column():
             checkpoint_input = gr.Radio(
                 choices=list(CHECKPOINTS.keys()),
                 value="Trained on VisA",
                 label="Checkpoints",
+                elem_classes=["matched-control"],
             )
+            run_button = gr.Button("Run inference", variant="primary", elem_classes=["full-width-button"])
         with gr.Column():
-            score_output = gr.Number(label="Anomaly score")
+            overlay_output = gr.Image(type="pil", label="Anomaly heatmap")
+            score_output = gr.Number(label="Anomaly score", elem_classes=["matched-control"])
+            stop_button = gr.Button("Stop inference", variant="stop", elem_classes=["full-width-button"])
 
     inference_event = run_button.click(
         predict,
