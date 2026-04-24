@@ -160,7 +160,7 @@ def predict(image, checkpoint_label):
 
 
 with gr.Blocks(
-    title="CoPS anomaly detection",
+    title="CoPS for Zero-shot Anomaly Detection",
     css="""
     .matched-control {
         min-height: 96px;
@@ -170,7 +170,7 @@ with gr.Blocks(
     }
     """,
 ) as demo:
-    gr.Markdown("# CoPS anomaly detection")
+    gr.Markdown("# CoPS for Zero-shot Anomaly Detection")
     with gr.Row():
         with gr.Column():
             image_input = gr.Image(type="pil", label="Input image")
