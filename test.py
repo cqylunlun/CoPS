@@ -73,11 +73,11 @@ def test(args):
 
         # Fuse global feature in ICTS module
         if hyperparameters['vae_length'] > 0:
-            z = torch.randn((10,) + image_features.shape).cuda()  # [8, 768]
+            z = torch.randn((10,) + image_features.shape, device=device)  # [8, 768]
             z = z.reshape(-1, z.shape[-1])  # [8*10, 768]
             bias = prompt_learner.vae_decoder(z).unsqueeze(1).unsqueeze(1)  # [8, 768]
         else:
-            bias = torch.zeros(image_features.shape).cuda()
+            bias = torch.zeros(image_features.shape, device=device)
 
         # Inject local features in ESTS module
         patch_features = [average_neighbor(patch_feature, args.dataset, mode='test') for patch_feature in patch_features]

@@ -1,3 +1,4 @@
+gradio
 ftfy==6.3.1
 numpy==1.26.3
 opencv-python-headless==4.10.0.84
@@ -8,6 +9,6 @@ scikit-image==0.22.0
 scikit-learn==1.4.0
 scipy==1.11.4
 timm==0.9.12
-torch==2.10.0+cu130
-torchvision==0.25.0+cu130
+torch
+torchvision
 tqdm==4.66.1
