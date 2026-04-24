@@ -154,21 +154,27 @@ with gr.Blocks(title="CoPS anomaly detection") as demo:
     with gr.Row():
         with gr.Column():
             image_input = gr.Image(type="pil", label="Input image")
+            with gr.Row():
+                run_button = gr.Button("Run inference", variant="primary")
+                stop_button = gr.Button("Stop inference", variant="stop")
+        with gr.Column():
+            overlay_output = gr.Image(type="pil", label="Anomaly heatmap")
+    with gr.Row():
+        with gr.Column():
             checkpoint_input = gr.Radio(
                 choices=list(CHECKPOINTS.keys()),
                 value="Trained on VisA",
                 label="Checkpoints",
             )
-            run_button = gr.Button("Run inference", variant="primary")
         with gr.Column():
-            overlay_output = gr.Image(type="pil", label="Anomaly heatmap")
             score_output = gr.Number(label="Anomaly score")
 
-    run_button.click(
+    inference_event = run_button.click(
         predict,
         inputs=[image_input, checkpoint_input],
         outputs=[score_output, overlay_output],
     )
+    stop_button.click(fn=None, inputs=None, outputs=None, cancels=[inference_event])
 
 
 if __name__ == "__main__":
