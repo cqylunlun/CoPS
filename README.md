@@ -38,6 +38,14 @@ Here, we present a brief summary of CoPS's performance across 5 industrial and 8
 | [Kvasir](https://figshare.com/articles/figure/Polyp_DataSet_zip/21221579) |           – |        – |        85.8 |     51.5 |
 | [Endo](https://drive.google.com/file/d/1LNpLkv5ZlEUzr_RPN5rdOHaqk0SkZa3m/view) |           – |        – |        90.0 |     58.7 |
 
+## Demo App
+We provide an online demo app on Hugging Face Spaces: [CoPS-demo](https://huggingface.co/spaces/ultraknight666/CoPS-demo).
+As shown below, the demo supports uploading an input image, selecting a checkpoint trained on VisA or MVTec,
+running inference online, and visualizing the predicted anomaly heatmap together with the anomaly score.
+Since the Hugging Face Space runs inference on CPU, processing a single image usually takes about 30 seconds.
+
+<img src="figures/CoPS_demo.png" width="70%">
+
 ## Environments
 Create a new conda environment and install required packages.
 ```
