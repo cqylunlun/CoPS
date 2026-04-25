@@ -32,8 +32,55 @@ CHECKPOINTS = {
     "Trained on MVTec": ("mvtec", "./results/models/mvtec/epoch_5.pth"),
 }
 
+FIGURES_DIR = "figures"
+EXAMPLES = [
+    {
+        "input_image": "Industrial_Sample_from_MVTec.png",
+        "dataset": "MVTec AD",
+        "checkpoint": "Trained on VisA",
+        "heatmap": "Output_Heatmap_from_MVTec_0.9892697930335999.webp",
+    },
+    {
+        "input_image": "Industrial_Sample_from_VisA.png",
+        "dataset": "VisA",
+        "checkpoint": "Trained on MVTec",
+        "heatmap": "Output_Heatmap_from_VisA_0.9920594096183777.webp",
+    },
+    {
+        "input_image": "Industrial_Sample_from_MPDD.png",
+        "dataset": "MPDD",
+        "checkpoint": "Trained on VisA",
+        "heatmap": "Output_Heatmap_from_MPDD_0.9144860506057739.webp",
+    },
+    {
+        "input_image": "Medical_Sample_from_Br35H.png",
+        "dataset": "Br35H",
+        "checkpoint": "Trained on VisA",
+        "heatmap": "Output_Heatmap_from_Br35H_0.9727131128311157.webp",
+    },
+    {
+        "input_image": "Medical_Sample_from_ColonDB.png",
+        "dataset": "ColonDB",
+        "checkpoint": "Trained on VisA",
+        "heatmap": "Output_Heatmap_from_ColonDB_0.9672988653182983.webp",
+    },
+]
+EXAMPLE_TABLE = [
+    [example["input_image"], example["dataset"], example["checkpoint"]]
+    for example in EXAMPLES
+]
+
 class Args:
     image_size = IMAGE_SIZE
+
+
+def _figure_path(filename):
+    return os.path.join(FIGURES_DIR, filename)
+
+
+def _score_from_heatmap_name(filename):
+    stem, _ = os.path.splitext(filename)
+    return float(stem.rsplit("_", 1)[-1])
 
 
 def _normalize_map(anomaly_map):
@@ -159,6 +206,15 @@ def predict(image, checkpoint_label):
     return score_value, overlay
 
 
+def load_example(evt: gr.SelectData):
+    row_index = evt.index[0] if isinstance(evt.index, (list, tuple)) else evt.index
+    example = EXAMPLES[row_index]
+    input_image = Image.open(_figure_path(example["input_image"])).convert("RGB")
+    heatmap = Image.open(_figure_path(example["heatmap"])).convert("RGB")
+    score = _score_from_heatmap_name(example["heatmap"])
+    return input_image, heatmap, example["checkpoint"], score
+
+
 with gr.Blocks(
     title="CoPS for Zero-shot Anomaly Detection",
     css="""
@@ -191,6 +247,14 @@ with gr.Blocks(
             run_button = gr.Button("Run inference", variant="primary", elem_classes=["full-width-button"])
         with gr.Column():
             stop_button = gr.Button("Stop inference", variant="stop", elem_classes=["full-width-button"])
+    example_table = gr.Dataframe(
+        headers=["Input image", "Dataset name", "Checkpoint"],
+        value=EXAMPLE_TABLE,
+        datatype=["str", "str", "str"],
+        interactive=False,
+        wrap=True,
+        label="Examples",
+    )
 
     inference_event = run_button.click(
         predict,
@@ -198,6 +262,11 @@ with gr.Blocks(
         outputs=[score_output, overlay_output],
     )
     stop_button.click(fn=None, inputs=None, outputs=None, cancels=[inference_event])
+    example_table.select(
+        load_example,
+        inputs=None,
+        outputs=[image_input, overlay_output, checkpoint_input, score_output],
+    )
 
 
 if __name__ == "__main__":
