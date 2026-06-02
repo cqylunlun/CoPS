@@ -93,11 +93,13 @@ Some qualitative visualization results on several datasets are shown below.
 Please cite the following paper if the code help your project:
 
 ```bibtex
-@article{chen2025cops,
-  title={Cops: Conditional prompt synthesis for zero-shot anomaly detection},
-  author={Chen, Qiyu and Qu, Zhen and Luo, Wei and Yao, Haiming and Cao, Yunkang and Jiang, Yuxin and Duan, Yinan and Luo, Huiyuan and Lv, Chengkan and Zhang, Zhengtao},
-  journal={arXiv preprint arXiv:2508.03447},
-  year={2025}
+@InProceedings{chen2026cops,
+    author    = {Chen, Qiyu and Qu, Zhen and Luo, Wei and Yao, Haiming and Cao, Yunkang and Jiang, Yuxin and Duan, Yinan and Luo, Huiyuan and Lv, Chengkan and Zhang, Zhengtao},
+    title     = {CoPS: Conditional Prompt Synthesis for Zero-Shot Anomaly Detection},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings},
+    month     = {June},
+    year      = {2026},
+    pages     = {8554-8563}
 }
 ```
 
