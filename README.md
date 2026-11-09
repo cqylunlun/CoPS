@@ -8,7 +8,7 @@ _Qiyu Chen, Zhen Qu, Wei Luo, Haiming Yao, Yunkang Cao, Yuxin Jiang, Yinan Duan,
 Huiyuan Luo, Chengkan Lv*, Zhengtao Zhang_
 
 [CVPR DOI Link](https://openaccess.thecvf.com/content/CVPR2026F/html/Chen_CoPS_Conditional_Prompt_Synthesis_for_Zero-Shot_Anomaly_Detection_CVPRF_2026_paper.html) & 
-[IEEE Xplore Search](https://ieeexplore.ieee.org/search/searchresult.jsp?queryText=CoPS%3A%20Conditional%20Prompt%20Synthesis%20for%20Zero-Shot%20Anomaly%20Detection) & 
+[IEEE DOI Link](https://ieeexplore.ieee.org/document/11698171/) & 
 [ArXiv Preprint Link](https://arxiv.org/abs/2508.03447)
 
 ## Introduction
